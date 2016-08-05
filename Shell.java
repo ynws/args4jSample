@@ -37,6 +37,7 @@ public class Shell {
             System.out.println(e);
             System.out.println();
             e.getParser().printUsage(System.out);
+            // ここでサブコマンドだけでも取得できればサブコマンドのstatic printUsage呼べる
             return;
         }
 
@@ -80,6 +81,7 @@ public class Shell {
      */
     public static interface Command {
         public void execute();
+        // public static void printUsage();
     }
 
     /**
