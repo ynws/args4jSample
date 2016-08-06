@@ -36,6 +36,9 @@ public class Shell {
         } catch (CmdLineException e) {
             System.out.println(e);
             System.out.println();
+            System.out.println("usage:");
+            parser.printSingleLineUsage(System.out);
+            System.out.println();
             e.getParser().printUsage(System.out);
             // ここでサブコマンドだけでも取得できればサブコマンドのstatic printUsage呼べる
             return;
