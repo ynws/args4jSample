@@ -8,7 +8,7 @@ import org.kohsuke.args4j.spi.SubCommands;
 import org.kohsuke.args4j.spi.StringArrayOptionHandler;
 
 public class Shell {
-    // ã‚³ãƒãƒ³ãƒ‰æœ¬ä½“ã®ã‚ªãƒ—ã‚·ãƒ§ãƒ³
+    // ƒRƒ}ƒ“ƒh–{‘Ì‚ÌƒIƒvƒVƒ‡ƒ“
     @Option(name="-v", aliases="--version", usage="print version")
         private boolean versionFlag;
     @Option(name="-h", aliases="--help", usage="print usage message and exit")
@@ -19,14 +19,14 @@ public class Shell {
         handler = SubCommandHandler.class
     )
 
-    // ã‚µãƒ–ã‚³ãƒãƒ³ãƒ‰å®šç¾©
+    // ƒTƒuƒRƒ}ƒ“ƒh’è‹`
     @SubCommands({
         @SubCommand(name = "sub1", impl = Sub1Command.class),
         @SubCommand(name = "sub2", impl = Sub2Command.class)
     })
     private Command command;
 
-    // ã‚³ãƒãƒ³ãƒ‰æœ¬ä½“
+    // ƒRƒ}ƒ“ƒh–{‘Ì
     public static void main(String[] args) {
         Shell shell = new Shell();
 
@@ -40,7 +40,7 @@ public class Shell {
             parser.printSingleLineUsage(System.out);
             System.out.println();
             e.getParser().printUsage(System.out);
-            // ã“ã“ã§ã‚µãƒ–ã‚³ãƒãƒ³ãƒ‰ã ã‘ã§ã‚‚å–å¾—ã§ãã‚Œã°ã‚µãƒ–ã‚³ãƒãƒ³ãƒ‰ã®static printUsageå‘¼ã¹ã‚‹
+            // ‚±‚±‚ÅƒTƒuƒRƒ}ƒ“ƒh‚¾‚¯‚Å‚àæ“¾‚Å‚«‚ê‚ÎƒTƒuƒRƒ}ƒ“ƒh‚Ìstatic printUsageŒÄ‚×‚é
             return;
         }
 
@@ -56,7 +56,7 @@ public class Shell {
             return;
         }
 
-        // ã‚µãƒ–ã‚³ãƒãƒ³ãƒ‰ãŒæŒ‡å®šã•ã‚Œã¦ã„ãŸã‚‰å®Ÿè¡Œã™ã‚‹
+        // ƒTƒuƒRƒ}ƒ“ƒh‚ªw’è‚³‚ê‚Ä‚¢‚½‚çÀs‚·‚é
         if(shell.command != null){
             shell.command.execute();
             return;
@@ -80,7 +80,7 @@ public class Shell {
     }
 
     /**
-     * ã‚³ãƒãƒ³ãƒ‰
+     * ƒRƒ}ƒ“ƒh
      */
     public static interface Command {
         public void execute();
