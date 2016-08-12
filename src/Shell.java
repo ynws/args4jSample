@@ -17,7 +17,6 @@ public class Shell {
         usage="subcommand",
         handler = SubCommandHandler.class
     )
-
     // サブコマンド定義
     @SubCommands({
         @SubCommand(name = "sub1", impl = Sub1Command.class),
@@ -35,11 +34,26 @@ public class Shell {
         } catch (CmdLineException e) {
             System.out.println(e);
             System.out.println();
+            if(args.length > 0){
+				CmdLineParser subcmd = new CmdLineParser(shell);
+				try {
+					// 先頭引数だけ再度解析。
+					// サブコマンドに必須引数が指定されていると結局ここで例外が出てしまう。要検討
+					subcmd.parseArgument(args[0]);
+					if(shell.command != null){
+						// ここでサブコマンドのstatic printUsage呼べる
+						System.out.println(shell.command.getClass());
+						return;
+					}
+				} catch (CmdLineException e1) {
+					// サブコマンドの指定誤りか、メインコマンドのオプション誤り
+					// 実行を継続してMainのUsage出す
+				}
+            }
             System.out.println("usage:");
-            parser.printSingleLineUsage(System.out);
+            e.getParser().printSingleLineUsage(System.out);
             System.out.println();
             e.getParser().printUsage(System.out);
-            // ここでサブコマンドだけでも取得できればサブコマンドのstatic printUsage呼べる
             return;
         }
 

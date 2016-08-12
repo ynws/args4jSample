@@ -2,7 +2,7 @@ import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 
 public class Sub1Command implements Command {
-	@Option(name="-i", aliases="--input", required = true, usage="input file path")
+	@Option(name="-i", aliases="--input", usage="input file path")
 	private String inputPath;
 	@Option(name="-o", aliases="--output", usage="output file path")
 	private String outputPath;
