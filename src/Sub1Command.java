@@ -22,10 +22,11 @@ public class Sub1Command implements Command {
 	}
 
 	public void printUsage(){
+		System.out.println("Sub1 Usage");
+		System.out.println("Options:");
+
 		Sub1Command sub1 = new Sub1Command();
 		CmdLineParser parser = new CmdLineParser(sub1);
-		System.out.println("Sub1 help");
-		System.out.println("Options:");
 		parser.printUsage(System.out);
 	}
 }

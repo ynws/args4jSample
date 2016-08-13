@@ -41,8 +41,7 @@ public class Shell {
 					// サブコマンドに必須引数が指定されていると結局ここで例外が出てしまう。要検討
 					subcmd.parseArgument(args[0]);
 					if(shell.command != null){
-						// ここでサブコマンドのstatic printUsage呼べる
-						System.out.println(shell.command.getClass());
+						shell.command.printUsage();
 						return;
 					}
 				} catch (CmdLineException e1) {
