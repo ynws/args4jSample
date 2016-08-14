@@ -31,35 +31,41 @@ public class Shell {
         CmdLineParser parser = new CmdLineParser(shell);
         try {
             parser.parseArgument(args);
+			// サブコマンドが指定されていたら実行する
+			if(shell.command != null){
+				shell.command.execute();
+				return;
+			}
         } catch (CmdLineException e) {
             System.out.println(e);
             System.out.println();
+            
+            // コマンドごとのUsageを出すための処理。汚い
             if(args.length > 0){
 				CmdLineParser subcmd = new CmdLineParser(shell);
 				try {
 					// 先頭引数だけ再度解析。
 					// サブコマンドに必須引数が指定されていると結局ここで例外が出てしまう。要検討
 					subcmd.parseArgument(args[0]);
-					if(shell.command != null){
-						shell.command.printUsage();
-						return;
-					}
+					shell.command.printUsage();
+					return;
 				} catch (CmdLineException e1) {
 					// サブコマンドの指定誤りか、メインコマンドのオプション誤り
-					// 実行を継続してMainのUsage出す
+					// MainのUsage出す
+					printUsage(parser);
+					return;
 				}
             }
-            System.out.println("usage:");
-            e.getParser().printSingleLineUsage(System.out);
-            System.out.println();
-            e.getParser().printUsage(System.out);
-            return;
+            // コマンド再解析しなくても以下の記述でもサブコマンドの単純なUsageが出せるが、ユーザ指定のコメント等は出せない
+            // System.out.println("sub auto usage:");
+            // e.getParser().printSingleLineUsage(System.out);
+            // System.out.println();
+            // e.getParser().printUsage(System.out);
+            // return;
         }
 
         if (shell.usageFlag) {
-            printUsage();
-            System.out.println("Options:");
-            parser.printUsage(System.out);
+            printUsage(parser);
             return;
         }
 
@@ -68,23 +74,15 @@ public class Shell {
             return;
         }
 
-        // サブコマンドが指定されていたら実行する
-        if(shell.command != null){
-            shell.command.execute();
-            return;
-        }
-        printUsage();
+        printUsage(parser);
     }
 
-    private static void printUsage(){
-        System.out.println("Usage:");
+    private static void printUsage(CmdLineParser parser){
+        System.out.println("Main Usage:");
         System.out.println(" Shell [options]");
         System.out.println(" Shell subcommand [subcommand options]");
-        System.out.println();
-        System.out.println("Subcommand:");
-        System.out.println(" sub1: hogehoge");
-        System.out.println(" sub2: hugahuga");
-        System.out.println();
+		System.out.println("Options:");
+		parser.printUsage(System.out);
     }
 
     private static void printVersion(){
